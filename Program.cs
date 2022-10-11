@@ -1,9 +1,19 @@
 ﻿using DeleteConsole;
 
-var rule = Validator.GetValidRule(ConsoleInput.GetInfo("правило")).ToEightBitBinary();
+Console.WriteLine("Введите операцию: ");
 
-var T = Validator.GetValidT(ConsoleInput.GetInfo("количество проходов"));
+int number = 56;
 
-var cycleBuilder = new CycleBuilder(T, rule);
+Console.WriteLine(number.ToEightBitBinary());
+string operation = $"{number}<<3";
 
-cycleBuilder.Work();
+
+
+var parser = new Parser(operation);
+
+var cyclebuilder = new CycleBuilder(parser);
+
+cyclebuilder.Work();
+//var rule = Validator.GetValidRule(ConsoleInput.GetInfo("правило")).ToEightBitBinary();
+
+//var T = Validator.GetValidT(ConsoleInput.GetInfo("количество проходов"));

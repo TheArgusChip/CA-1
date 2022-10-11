@@ -1,24 +1,50 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace DeleteConsole
+﻿namespace DeleteConsole
 {
     internal class CycleBuilder
     {
         private List<int[]> _cycles =  new List<int[]>();
         private int _t;
         private string _rule;
+        private int _length;
 
-        public CycleBuilder(int t, string rule)
+        public CycleBuilder(Parser settings)
         {
-            _cycles.Add(Constants.StartLine);
-            _t = t;
-            _rule = rule;
+            _cycles.Add(settings.FirstLine);
+            _t = settings.ShiftCount;
+            _rule = settings.Rule;
+            _length = _cycles.First().Length;
         }
 
         public void Work()
         {
-            Build();
+
+
+            if (_t > _cycles[0].Length)
+            {
+                AddZero();
+            }
+            else
+            {
+                Build();
+            }
+
+            Console.WriteLine();
             Show();
+        }
+
+        private void AddZero()
+        {
+            _cycles.Add(new int[_cycles.First().Length]);   
+        }
+
+        private void Show()
+        {
+            var lastLine = _cycles.Last();
+
+            foreach (var symbol in lastLine)
+            {
+                Console.Write(symbol + " ");
+            }
         }
 
         private void Build()
@@ -31,20 +57,20 @@ namespace DeleteConsole
 
         private int[] GetNewLine(int v)
         {
-            var result = new int[Constants.StartLine.Length];
+            var result = new int[_length];
 
-            FillDefaultValue(ref result, 0, v + 1, 2);
+            FillDefaultValue(ref result, 0, v + 1, 0);
 
-            FillCalculatedValue(ref result, v, Constants.StartLine.Length - v - 1);
+            FillCalculatedValue(ref result, v, _length - v - 1);
 
-            FillDefaultValue(ref result, Constants.StartLine.Length - v - 1, Constants.StartLine.Length, 2);
+            FillDefaultValue(ref result, _length - v - 1, _length, 0);
 
             return result;
         }
 
         private void FillCalculatedValue(ref int[] result, int v, int v2)
         {
-            for (int i = v + 1; i < Constants.StartLine.Length - v - 1; i++)
+            for (int i = v + 1; i < _length - v - 1; i++)
             {
                 result[i] = Calculate(v, i);
             }
@@ -61,19 +87,6 @@ namespace DeleteConsole
             }
 
             return Convert.ToInt32(_rule[ruleIndex].ToString());
-        }
-
-        private void Show()
-        {
-            foreach (var line in _cycles)
-            {
-                foreach (var symbol in line)
-                {
-                    Console.Write(symbol + " ");
-                }
-
-                Console.WriteLine();
-            }
         }
 
         private void FillDefaultValue(ref int[] result, int startIndex, int endIndex, int value)

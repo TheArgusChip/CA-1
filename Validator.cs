@@ -9,11 +9,11 @@
             return (rule > maximumNumber) ? maximumNumber : rule;
         }
 
-        public static int GetValidT(int T)
-        {
-            int maximumCycles = Convert.ToInt32((Constants.StartLine.Length - 1) / 2);
+        //public static int GetValidT(int T)
+        //{
+        //    int maximumCycles = Convert.ToInt32((_le - 1) / 2);
 
-            return (T > maximumCycles) ? maximumCycles : T;
-        }
+        //    return (T > maximumCycles) ? maximumCycles : T;
+        //}
     }
 }

@@ -2,6 +2,18 @@
 
 static class Converter
 {
+
+    public static string ToDecimal(string binary)
+    {
+        int result = 0;
+        for (int i = 0; i < binary.Length; i++)
+        {
+            result += Convert.ToInt32(binary[i].ToString()) * (int)Math.Pow(2, i);
+        }
+
+        return result.ToString();
+    }
+
     public static string ToEightBitBinary(this int source)
     {
 
@@ -24,4 +36,6 @@ static class Converter
 
         return (source % 2).ToString() + ToBinary(source / 2);
     }
+
+
 }
